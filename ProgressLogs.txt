@@ -1,6 +1,4 @@
-<<<<<<< HEAD
->> Raspbian OS reinstalled again
->> Enabled SSH
-=======
-..
->>>>>>> e0054cf005f57ba892df1a92cf79f4a791efaf5f
+
+> Raspbian OS reinstalled again
+> Enabled SSH
+> VNC server added
