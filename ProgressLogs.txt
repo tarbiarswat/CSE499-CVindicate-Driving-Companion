@@ -2,3 +2,8 @@
 > Raspbian OS reinstalled again
 > Enabled SSH
 > VNC server added
+
+
+Installing OpenCV on Raspberry Pi 4
+
+sudo apt-get update

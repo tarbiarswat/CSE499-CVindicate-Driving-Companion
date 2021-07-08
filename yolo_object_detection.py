@@ -9,7 +9,7 @@ layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
-img = cv2.imread("6.jpg")
+img = cv2.imread("./images/6.jpg")
 #img = cv2.resize(img, None, fx=0.4, fy=0.4)
 
 
