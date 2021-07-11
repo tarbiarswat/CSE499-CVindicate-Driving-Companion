@@ -32,3 +32,4 @@ Installing OpenCV on Raspberry Pi 4
 19. sudo make install &amp;&amp; sudo ldconfig
 20. sudo reboot
 
+test
