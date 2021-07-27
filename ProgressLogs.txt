@@ -2,6 +2,7 @@
 > Raspbian OS reinstalled again
 > Enabled SSH
 > VNC server added
+> DC Motor Controller position changed
 
 
 Installing OpenCV on Raspberry Pi 4
