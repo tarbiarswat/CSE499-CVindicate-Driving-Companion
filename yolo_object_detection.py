@@ -23,7 +23,7 @@ outs = net.forward(output_layers)
 
 # information
 class_ids = []
-confidences = []
+confidences = [] 
 boxes = []
 for out in outs:
     for detection in out:
