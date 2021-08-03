@@ -45,11 +45,52 @@ void Backward()
   
 }
 
+void Stop()
+{
+  digitalWrite(HighL, LOW);
+  digitalWrite(LowL, HIGH);
+  analogWrite(EnableL,0);
+
+  digitalWrite(HighR, LOW);
+  digitalWrite(LowR, HIGH);
+  analogWrite(EnableR,0);
+  
+}
+
+void Left1()
+{
+  digitalWrite(HighL, LOW);
+  digitalWrite(LowL, HIGH);
+  analogWrite(EnableL,160);
+
+  digitalWrite(HighR, LOW);
+  digitalWrite(LowR, HIGH);
+  analogWrite(EnableR,255);
+  
+}
+
+
+void Right1()
+{
+  digitalWrite(HighL, LOW);
+  digitalWrite(LowL, HIGH);
+  analogWrite(EnableL,255);
+
+  digitalWrite(HighR, LOW);
+  digitalWrite(LowR, HIGH);
+  analogWrite(EnableR,160);  
+  
+}
+
 
 
 void loop() 
 {
-  Forward();
+  
+  Left1();
+  delay(4000);  
+  Stop();
+  
   
  
 
