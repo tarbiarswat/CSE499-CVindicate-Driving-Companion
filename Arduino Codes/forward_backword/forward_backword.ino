@@ -61,7 +61,7 @@ void Left1()
 {
   digitalWrite(HighL, LOW);
   digitalWrite(LowL, HIGH);
-  analogWrite(EnableL,160);
+  analogWrite(EnableL,90);
 
   digitalWrite(HighR, LOW);
   digitalWrite(LowR, HIGH);
@@ -78,7 +78,7 @@ void Right1()
 
   digitalWrite(HighR, LOW);
   digitalWrite(LowR, HIGH);
-  analogWrite(EnableR,160);  
+  analogWrite(EnableR,90);  
   
 }
 
@@ -86,10 +86,13 @@ void Right1()
 
 void loop() 
 {
-  
-  Left1();
-  delay(4000);  
+  Forward();
+  delay(2000);
   Stop();
+  delay(2000);
+  Left1();
+  delay(1000);  
+  
   
   
  
