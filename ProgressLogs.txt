@@ -4,5 +4,6 @@
 > VNC server added
 > DC Motor Controller position changed
 > L293D motor controller changed to L298N
+> Camera mounted on the cassis
 
 
