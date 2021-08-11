@@ -5,5 +5,5 @@
 > DC Motor Controller position changed
 > L293D motor controller changed to L298N
 > Camera mounted on the cassis
-
+> Uninstalled unnecessary softwares from Raspbeery Pi
 
