@@ -8,4 +8,5 @@
 > Uninstalled unnecessary softwares from Raspbeery Pi
 > Opencv Package configured & Build Path added in geany IDE
 > raspicam installed and build path added to geany
+> initialized camera with a test code to get camera ID to check
 
