@@ -1,3 +1,26 @@
+
+Conversation opened. 1 unread message.
+
+Skip to content
+Using Gmail with screen readers
+Meet
+New meeting
+Join a meeting
+Hangouts
+1 of 8,664
+camera cpp code
+Inbox
+Tarbiar Swat
+	
+Attachments3:14 AM (24 minutes ago)
+	
+to me
+
+Attachments area
+	
+	
+	
+
 #include <opencv2/opencv.hpp>
 #include <raspicam_cv.h>
 #include <iostream>
@@ -11,7 +34,7 @@ using namespace raspicam;
 
 Mat frame;
 RaspiCam_Cv Camera;
-
+Point2f Source[] = {Point2f(40,135),Point2f(360,135),Point2f(0,185), Point2f(400,185)};
 
 void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
 {
@@ -22,6 +45,14 @@ void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
     Camera.set ( CAP_PROP_SATURATION,  ( "-sa",argc,argv,50 ) );
     Camera.set ( CAP_PROP_GAIN,  ( "-g",argc,argv ,50 ) );
     Camera.set ( CAP_PROP_FPS,  ( "-fps",argc,argv,30));
+}
+
+void Perspective()
+{
+	line(frame,Source[0], Source[1], Scalar(0,0,255), 2);
+	line(frame,Source[1], Source[3], Scalar(0,0,255), 2);
+	line(frame,Source[3], Source[2], Scalar(0,0,255), 2);
+	line(frame,Source[2], Source[0], Scalar(0,0,255), 2);
 
 }
 
@@ -31,6 +62,7 @@ void Capture()
     Camera.retrieve(frame);
     cvtColor(frame, frame, COLOR_BGR2RGB);
 }
+
 
 int main(int argc, char **argv)
 {
@@ -48,7 +80,7 @@ int main(int argc, char **argv)
     {
 	auto start = std::chrono::system_clock::now();
 	Capture();
-	
+	Perspective();
 	
 	namedWindow("FrontView", WINDOW_KEEPRATIO);
 	moveWindow("FrontView", 150, 100);
@@ -66,3 +98,6 @@ int main(int argc, char **argv)
 	return 0;
      
     }
+
+camera.cpp
+Displaying camera.cpp.
