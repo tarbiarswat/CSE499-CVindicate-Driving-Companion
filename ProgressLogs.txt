@@ -10,4 +10,5 @@
 > raspicam installed and build path added to geany
 > initialized camera with a test code to get camera ID to check
 > Camera working and capturing images
+> Camera capturing videos realtime + updated camera settings
 
