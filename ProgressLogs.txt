@@ -12,4 +12,4 @@
 > Camera working and capturing images
 > Camera capturing videos realtime + updated camera settings
 > Created realtime logs in console to find FPS in realtime
-
+> converted image signature from BGR to RGB
