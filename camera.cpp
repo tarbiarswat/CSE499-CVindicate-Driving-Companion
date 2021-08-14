@@ -1,26 +1,3 @@
-
-Conversation opened. 1 unread message.
-
-Skip to content
-Using Gmail with screen readers
-Meet
-New meeting
-Join a meeting
-Hangouts
-1 of 8,664
-camera cpp code
-Inbox
-Tarbiar Swat
-	
-Attachments3:14 AM (24 minutes ago)
-	
-to me
-
-Attachments area
-	
-	
-	
-
 #include <opencv2/opencv.hpp>
 #include <raspicam_cv.h>
 #include <iostream>
@@ -34,7 +11,7 @@ using namespace raspicam;
 
 Mat frame;
 RaspiCam_Cv Camera;
-Point2f Source[] = {Point2f(40,135),Point2f(360,135),Point2f(0,185), Point2f(400,185)};
+Point2f Source[] = {Point2f(65,135),Point2f(320,135),Point2f(30,185), Point2f(360,185)};
 
 void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
 {
@@ -45,6 +22,7 @@ void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
     Camera.set ( CAP_PROP_SATURATION,  ( "-sa",argc,argv,50 ) );
     Camera.set ( CAP_PROP_GAIN,  ( "-g",argc,argv ,50 ) );
     Camera.set ( CAP_PROP_FPS,  ( "-fps",argc,argv,30));
+
 }
 
 void Perspective()
@@ -67,6 +45,7 @@ void Capture()
 int main(int argc, char **argv)
 {
 	
+    
     Setup(argc, argv, Camera);
 	cout<<"Connecting to camera"<<endl;
 	if (!Camera.open())	
@@ -94,10 +73,8 @@ int main(int argc, char **argv)
 	int FPS = 1/t;
 	cout<<"FPS = "<<FPS<<endl;
     
+	
 	}
 	return 0;
      
     }
-
-camera.cpp
-Displaying camera.cpp.
