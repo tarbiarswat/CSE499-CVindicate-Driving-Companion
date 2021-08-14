@@ -9,9 +9,12 @@ using namespace std;
 using namespace cv;
 using namespace raspicam;
 
-Mat frame;
+Mat frame, Matrix, framePers;
+
 RaspiCam_Cv Camera;
-Point2f Source[] = {Point2f(65,135),Point2f(320,135),Point2f(30,185), Point2f(360,185)};
+
+Point2f Source[] = {Point2f(55,135),Point2f(315,135),Point2f(15,185), Point2f(355,185)};
+Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(300,240)};
 
 void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
 {
@@ -31,7 +34,11 @@ void Perspective()
 	line(frame,Source[1], Source[3], Scalar(0,0,255), 2);
 	line(frame,Source[3], Source[2], Scalar(0,0,255), 2);
 	line(frame,Source[2], Source[0], Scalar(0,0,255), 2);
-
+	
+       
+	
+	Matrix = getPerspectiveTransform(Source, Destination);
+	warpPerspective(frame, framePers, Matrix, Size(350,240));
 }
 
 void Capture()
@@ -65,6 +72,11 @@ int main(int argc, char **argv)
 	moveWindow("FrontView", 150, 100);
 	resizeWindow("FrontView", 640, 480);
 	imshow("FrontView", frame);
+	
+	namedWindow("Birds Eye View", WINDOW_KEEPRATIO);
+	moveWindow("Birds Eye View", 150, 100);
+	resizeWindow("Birds Eye View", 640, 480);
+	imshow("Birds Eye View" ,framePers);
 	
 	waitKey(1);
 	auto end = std::chrono::system_clock::now();
