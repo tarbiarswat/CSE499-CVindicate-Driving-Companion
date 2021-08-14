@@ -9,7 +9,7 @@ using namespace std;
 using namespace cv;
 using namespace raspicam;
 
-Mat frame, Matrix, framePers;
+Mat frame, Matrix, framePers, frameGray;
 
 RaspiCam_Cv Camera;
 
@@ -41,6 +41,12 @@ void Perspective()
 	warpPerspective(frame, framePers, Matrix, Size(350,240));
 }
 
+void Threshold()
+{
+    cvtColor(framePers, frameGray, COLOR_RGB2GRAY);
+    inRange(frameGray, 190, 255, frameGray);
+}
+
 void Capture()
 {
     Camera.grab();
@@ -67,16 +73,22 @@ int main(int argc, char **argv)
 	auto start = std::chrono::system_clock::now();
 	Capture();
 	Perspective();
+	Threshold();
 	
 	namedWindow("FrontView", WINDOW_KEEPRATIO);
 	moveWindow("FrontView", 150, 100);
-	resizeWindow("FrontView", 640, 480);
+	resizeWindow("FrontView", 360, 240);
 	imshow("FrontView", frame);
 	
 	namedWindow("Birds Eye View", WINDOW_KEEPRATIO);
-	moveWindow("Birds Eye View", 150, 100);
-	resizeWindow("Birds Eye View", 640, 480);
+	moveWindow("Birds Eye View", 515, 100);
+	resizeWindow("Birds Eye View", 360, 240);
 	imshow("Birds Eye View" ,framePers);
+	
+	namedWindow("TrackView", WINDOW_KEEPRATIO);
+	moveWindow("TrackView", 880, 100);
+	resizeWindow("TrackView", 360, 240);
+	imshow("TrackView" ,frameGray);
 	
 	waitKey(1);
 	auto end = std::chrono::system_clock::now();
