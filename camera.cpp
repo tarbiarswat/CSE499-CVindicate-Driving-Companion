@@ -10,11 +10,11 @@ using namespace cv;
 using namespace raspicam;
 
 Mat frame, Matrix, framePers, frameGray, frameThresh, frameEdge, frameFinal;
-
+Mat ROILane;
 
 RaspiCam_Cv Camera;
 
-
+vector<int> histogramLane;
 
 Point2f Source[] = {Point2f(55,135),Point2f(315,135),Point2f(15,185), Point2f(355,185)};
 Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(300,240)};
@@ -53,8 +53,24 @@ void Threshold()
     cvtColor(frameFinal, frameFinal, COLOR_GRAY2RGB);
 }
 
+void Histogram()
+{
+    histogramLane.resize(400);
+    histogramLane.clear();
+    
+    for(int i=0; i<400; i++)      //frame.size().width = 400
+    {
+	ROILane = frameFinal(Rect(i,140,1,240));
+	divide(255, ROILane, ROILane);
+	histogramLane.push_back((int)(sum(ROILane) [0]));
+    }
+}
 
-
+void LaneFinder()
+{
+    vector<int>:: iterator LeftPtr;
+    
+}
 
 void Capture()
 {
