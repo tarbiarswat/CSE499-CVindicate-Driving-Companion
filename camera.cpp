@@ -11,12 +11,13 @@ using namespace raspicam;
 
 Mat frame, Matrix, framePers, frameGray, frameThresh, frameEdge, frameFinal;
 Mat ROILane;
+int LeftLanePos, RightLanePos;
 
 RaspiCam_Cv Camera;
 
-vector<int> histogramLane;
+vector<int> histrogramLane;
 
-Point2f Source[] = {Point2f(55,135),Point2f(315,135),Point2f(15,185), Point2f(355,185)};
+Point2f Source[] = {Point2f(55,135),Point2f(320,135),Point2f(15,185), Point2f(355,185)};
 Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(300,240)};
 
 void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
@@ -41,7 +42,7 @@ void Perspective()
        
 	
 	Matrix = getPerspectiveTransform(Source, Destination);
-	warpPerspective(frame, framePers, Matrix, Size(350,240));
+	warpPerspective(frame, framePers, Matrix, Size(400,240));
 }
 
 void Threshold()
@@ -53,23 +54,32 @@ void Threshold()
     cvtColor(frameFinal, frameFinal, COLOR_GRAY2RGB);
 }
 
-void Histogram()
+void Histrogram()
 {
-    histogramLane.resize(400);
-    histogramLane.clear();
+    histrogramLane.resize(400);
+    histrogramLane.clear();
     
     for(int i=0; i<400; i++)      //frame.size().width = 400
     {
-	ROILane = frameFinal(Rect(i,140,1,240));
+	ROILane = frameFinal(Rect(i,140,1,100));
 	divide(255, ROILane, ROILane);
-	histogramLane.push_back((int)(sum(ROILane) [0]));
+	histrogramLane.push_back((int)(sum(ROILane) [0]));
     }
 }
 
 void LaneFinder()
 {
     vector<int>:: iterator LeftPtr;
+    LeftPtr = max_element(histrogramLane.begin(), histrogramLane.begin() + 150);
+    LeftLanePos = distance(histrogramLane.begin(), LeftPtr);
     
+    
+    vector<int>:: iterator RightPtr;
+    RightPtr = max_element(histrogramLane.begin() + 250, histrogramLane.end());
+    RightLanePos = distance(histrogramLane.begin(), RightPtr);
+    
+    line(frameFinal, Point2f(LeftLanePos, 0), Point2f(LeftLanePos, 240), Scalar(0,255,0), 2);
+    line(frameFinal, Point2f(RightLanePos, 0), Point2f(RightLanePos, 240), Scalar(0,255,0), 2);
 }
 
 void Capture()
@@ -99,19 +109,21 @@ int main(int argc, char **argv)
 	Capture();
 	Perspective();
 	Threshold();
+	Histrogram();
+	LaneFinder();
 	
 	namedWindow("FrontView", WINDOW_KEEPRATIO);
-	moveWindow("FrontView", 150, 100);
+	moveWindow("FrontView", 0, 100);
 	resizeWindow("FrontView", 360, 240);
 	imshow("FrontView", frame);
 	
 	namedWindow("Birds Eye View", WINDOW_KEEPRATIO);
-	moveWindow("Birds Eye View", 515, 100);
+	moveWindow("Birds Eye View", 360, 100);
 	resizeWindow("Birds Eye View", 360, 240);
 	imshow("Birds Eye View" ,framePers);
 	
 	namedWindow("Final", WINDOW_KEEPRATIO);
-	moveWindow("Final", 880, 100);
+	moveWindow("Final", 720, 100);
 	resizeWindow("Final", 360, 240);
 	imshow("Final" ,frameFinal);
 	
