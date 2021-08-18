@@ -23,4 +23,4 @@
 > Lane Center Detection Implemented
 > Showing the car turning movement's information on the front window
 > Configured the digital pins of RPi to connect with Aurdino 
-> wiringpi reinstalled and package config file updated with build path
+> Code added to Arduino for turning the car right/left by different angles
