@@ -22,3 +22,4 @@
 > Histogram truncation fixed and output window range issue has been solved 
 > Lane Center Detection Implemented
 > Showing the car turning movement's information on the front window
+> Configured the digital pins of RPi to connect with Aurdino 
