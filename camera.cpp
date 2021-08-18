@@ -11,13 +11,13 @@ using namespace raspicam;
 
 Mat frame, Matrix, framePers, frameGray, frameThresh, frameEdge, frameFinal, frameFinalDuplicate;
 Mat ROILane;
-int LeftLanePos, RightLanePos;
+int LeftLanePos, RightLanePos, frameCenter, laneCenter, Result;
 
 RaspiCam_Cv Camera;
 
 vector<int> histrogramLane;
 
-Point2f Source[] = {Point2f(55,135),Point2f(320,135),Point2f(15,185), Point2f(355,185)};
+Point2f Source[] = {Point2f(50,135),Point2f(315,135),Point2f(15,185), Point2f(355,185)};
 Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(300,240)};
 
 void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
@@ -60,7 +60,7 @@ void Histrogram()
     histrogramLane.resize(400);
     histrogramLane.clear();
     
-    for(int i=0; i<400; i++)      
+    for(int i=0; i<400; i++)      //frame.size().width = 400
     {
 	ROILane = frameFinalDuplicate(Rect(i,140,1,100));
 	divide(255, ROILane, ROILane);
@@ -82,6 +82,18 @@ void LaneFinder()
     line(frameFinal, Point2f(LeftLanePos, 0), Point2f(LeftLanePos, 240), Scalar(0,255,0), 2);
     line(frameFinal, Point2f(RightLanePos, 0), Point2f(RightLanePos, 240), Scalar(0,255,0), 2);
 }
+
+void LaneCenter()
+{
+    laneCenter = (RightLanePos-LeftLanePos)/2 +LeftLanePos;
+    frameCenter = 179;
+    
+    line(frameFinal, Point2f(laneCenter,0), Point2f(laneCenter,240), Scalar(0,255,0), 3);
+    line(frameFinal, Point2f(frameCenter,0), Point2f(frameCenter,240), Scalar(255,0,0), 3);
+
+    Result = laneCenter-frameCenter;
+}
+
 
 void Capture()
 {
@@ -112,6 +124,7 @@ int main(int argc, char **argv)
 	Threshold();
 	Histrogram();
 	LaneFinder();
+	LaneCenter();
 	
 	namedWindow("FrontView", WINDOW_KEEPRATIO);
 	moveWindow("FrontView", 0, 100);
