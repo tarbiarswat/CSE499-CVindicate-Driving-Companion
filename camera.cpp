@@ -15,6 +15,8 @@ int LeftLanePos, RightLanePos, frameCenter, laneCenter, Result;
 
 RaspiCam_Cv Camera;
 
+stringstream ss;
+
 vector<int> histrogramLane;
 
 Point2f Source[] = {Point2f(50,135),Point2f(315,135),Point2f(15,185), Point2f(355,185)};
@@ -125,6 +127,11 @@ int main(int argc, char **argv)
 	Histrogram();
 	LaneFinder();
 	LaneCenter();
+	
+	ss.str("");
+	ss.clear();
+	ss<<"Result = "<<Result;
+	putText(frame, ss.str(), Point2f(1,50), 0, 1, Scalar(0,0,255), 2);
 	
 	namedWindow("FrontView", WINDOW_KEEPRATIO);
 	moveWindow("FrontView", 0, 100);

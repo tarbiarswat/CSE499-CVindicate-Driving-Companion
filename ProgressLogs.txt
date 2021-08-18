@@ -21,3 +21,4 @@
 > Lane finder in histrogram implemented
 > Histogram truncation fixed and output window range issue has been solved 
 > Lane Center Detection Implemented
+> Showing the car turning movement's information on the front window
