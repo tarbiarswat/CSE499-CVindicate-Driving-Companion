@@ -9,7 +9,7 @@ using namespace std;
 using namespace cv;
 using namespace raspicam;
 
-Mat frame, Matrix, framePers, frameGray, frameThresh, frameEdge, frameFinal;
+Mat frame, Matrix, framePers, frameGray, frameThresh, frameEdge, frameFinal, frameFinalDuplicate;
 Mat ROILane;
 int LeftLanePos, RightLanePos;
 
@@ -52,6 +52,7 @@ void Threshold()
     Canny(frameGray, frameEdge, 600, 700, 3, false);
     add(frameThresh, frameEdge, frameFinal);
     cvtColor(frameFinal, frameFinal, COLOR_GRAY2RGB);
+    cvtColor(frameFinal, frameFinalDuplicate, COLOR_RGB2BGR);
 }
 
 void Histrogram()
@@ -59,9 +60,9 @@ void Histrogram()
     histrogramLane.resize(400);
     histrogramLane.clear();
     
-    for(int i=0; i<400; i++)      //frame.size().width = 400
+    for(int i=0; i<400; i++)      
     {
-	ROILane = frameFinal(Rect(i,140,1,100));
+	ROILane = frameFinalDuplicate(Rect(i,140,1,100));
 	divide(255, ROILane, ROILane);
 	histrogramLane.push_back((int)(sum(ROILane) [0]));
     }

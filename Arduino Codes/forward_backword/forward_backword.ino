@@ -87,11 +87,7 @@ void Right1()
 void loop() 
 {
   Forward();
-  delay(2000);
-  Stop();
-  delay(2000);
-  Left1();
-  delay(1000);  
+  
   
   
   
