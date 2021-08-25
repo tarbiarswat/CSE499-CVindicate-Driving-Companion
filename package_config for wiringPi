@@ -1,0 +1,1 @@
+g++ $(pkg-config opencv4 --cflags --libs) -o g++ $(pkg-config raspicam --cflags --libs) -o g++ $(pkg-config wiringpi --cflags --libs) -o %e %f

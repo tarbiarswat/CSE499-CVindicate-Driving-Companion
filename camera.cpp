@@ -9,25 +9,15 @@ using namespace std;
 using namespace cv;
 using namespace raspicam;
 
-<<<<<<< HEAD
-Mat frame, Matrix, framePers, frameGray, frameThresh, frameEdge, frameFinal, frameFinalDuplicate, frameFinalDuplicate1;
-Mat ROILane, ROILaneEnd;
-int LeftLanePos, RightLanePos, frameCenter, laneCenter, Result, laneEnd;
-=======
 Mat frame, Matrix, framePers, frameGray, frameThresh, frameEdge, frameFinal, frameFinalDuplicate;
 Mat ROILane;
 int LeftLanePos, RightLanePos, frameCenter, laneCenter, Result;
->>>>>>> e7304a51f21037a331ca08b58735e50abb286d95
 
 RaspiCam_Cv Camera;
 
 stringstream ss;
 
 vector<int> histrogramLane;
-<<<<<<< HEAD
-vector<int> histrogramLaneEnd;
-=======
->>>>>>> e7304a51f21037a331ca08b58735e50abb286d95
 
 Point2f Source[] = {Point2f(50,135),Point2f(315,135),Point2f(15,185), Point2f(355,185)};
 Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(300,240)};
@@ -56,46 +46,6 @@ void Perspective()
 	Matrix = getPerspectiveTransform(Source, Destination);
 	warpPerspective(frame, framePers, Matrix, Size(400,240));
 }
-<<<<<<< HEAD
-
-void Threshold()
-{
-    cvtColor(framePers, frameGray, COLOR_RGB2GRAY);
-    inRange(frameGray, 190, 255, frameThresh);
-    Canny(frameGray, frameEdge, 600, 700, 3, false);
-    add(frameThresh, frameEdge, frameFinal);
-    cvtColor(frameFinal, frameFinal, COLOR_GRAY2RGB);
-    cvtColor(frameFinal, frameFinalDuplicate, COLOR_RGB2BGR);
-    cvtColor(frameFinal, frameFinalDuplicate1, COLOR_RGB2BGR);
-}
-
-void Histrogram()
-{
-    histrogramLane.resize(400);
-    histrogramLane.clear();
-    
-    for(int i=0; i<400; i++)      //frame.size().width = 400
-    {
-	ROILane = frameFinalDuplicate(Rect(i,140,1,100));
-	divide(255, ROILane, ROILane);
-	histrogramLane.push_back((int)(sum(ROILane) [0]));
-    }
-    
-    histrogramLaneEnd.resize(400);
-    histrogramLaneEnd.clear();
-    
-    for(int i=0; i<400; i++)      //frame.size().width = 400
-    {
-	ROILaneEnd = frameFinalDuplicate1(Rect(i,0,1,240));
-	divide(255, ROILaneEnd, ROILaneEnd);
-	histrogramLaneEnd.push_back((int)(sum(ROILaneEnd) [0]));
-    }
-    
-    laneEnd = sum(histrogramLaneEnd)[0];
-    cout<<"Lane End = "<<laneEnd<<endl;
-}
-
-=======
 
 void Threshold()
 {
@@ -120,7 +70,6 @@ void Histrogram()
     }
 }
 
->>>>>>> e7304a51f21037a331ca08b58735e50abb286d95
 void LaneFinder()
 {
     vector<int>:: iterator LeftPtr;
@@ -183,18 +132,6 @@ int main(int argc, char **argv)
 	LaneFinder();
 	LaneCenter();
 	
-<<<<<<< HEAD
-	if (laneEnd > 3000)
-	{
-	    digitalWrite(21, 1);
-	    digitalWrite(22, 1);
-	    digitalWrite(23, 1);	//decimal=7
-	    digitalWrite(24, 0);
-	    cout<<"Lane End"<<endl;  
-	    }
-	
-=======
->>>>>>> e7304a51f21037a331ca08b58735e50abb286d95
 	if (Result ==0)
 	{
 	    digitalWrite(21, 0);
@@ -212,8 +149,6 @@ int main(int argc, char **argv)
 	    digitalWrite(24, 0);
 	    cout<<"Right1"<<endl;
 	}
-<<<<<<< HEAD
-=======
 	
 	else if (Result >=10 && Result <20)
 	{
@@ -264,60 +199,7 @@ int main(int argc, char **argv)
 	ss.clear();
 	ss<<"Result = "<<Result;
 	putText(frame, ss.str(), Point2f(1,50), 0, 1, Scalar(0,0,255), 2);
->>>>>>> e7304a51f21037a331ca08b58735e50abb286d95
 	
-	else if (Result >=10 && Result <20)
-	{
-	    digitalWrite(21, 0);
-	    digitalWrite(22, 1);
-	    digitalWrite(23, 0);	//decimal=2
-	    digitalWrite(24, 0);
-	    cout<<"Right2"<<endl;
-	}
-	
-	else if (Result > 20)
-	{
-	    digitalWrite(21, 1);
-	    digitalWrite(22, 1);
-	    digitalWrite(23, 0);	//decimal=3
-	    digitalWrite(24, 0);
-	    cout<<"Right3"<<endl;
-	}
-	
-	else if (Result <0 && Result >-10)
-	{
-	    digitalWrite(21, 0);
-	    digitalWrite(22, 0);
-	    digitalWrite(23, 1);	//decimal=4
-	    digitalWrite(24, 0);
-	    cout<<"Left1"<<endl;
-	}
-	
-	else if (Result <=-10 && Result >-20)
-	{
-	    digitalWrite(21, 1);
-	    digitalWrite(22, 0);
-	    digitalWrite(23, 1);	//decimal=5
-	    digitalWrite(24, 0);
-	    cout<<"Left2"<<endl;
-	}
-	
-	else if (Result <-20)
-	{
-	    digitalWrite(21, 0);
-	    digitalWrite(22, 1);
-	    digitalWrite(23, 1);	//decimal=6
-	    digitalWrite(24, 0);
-	    cout<<"Left3"<<endl;
-	}
-	
-	if (Result ==0)
-	{
-	ss.str("");
-	ss.clear();
-	ss<<"Result = "<<Result;
-	putText(frame, ss.str(), Point2f(1,50), 0, 1, Scalar(0,0,255), 2);
-    }
 	namedWindow("FrontView", WINDOW_KEEPRATIO);
 	moveWindow("FrontView", 0, 100);
 	resizeWindow("FrontView", 360, 240);
