@@ -38,7 +38,7 @@ int main(int argc, char** argv)
      
 	cout<<"Camera Id = "<<Camera.getId()<<endl;
 	
-	for (int i=0; i<40; i++)
+	for (int i=0; i<299; i++)
 	{
 		Camera.grab();
 		Camera.retrieve(frame);
