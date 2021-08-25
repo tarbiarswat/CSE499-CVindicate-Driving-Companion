@@ -1,0 +1,26 @@
+sudo apt-get purge wiringpi
+
+hash -r
+
+sudo apt-get install git-core
+
+sudo apt-get update
+
+sudo apt-get upgrade
+
+cd
+
+git clone https://github.com/wiringpi/wiringpi
+
+cd ~/wiringpi
+
+git pull origin
+
+cd ~/wiringpi
+
+./build
+
+
+##Build Path
+
+g++ $(pkg-config opencv4 --cflags --libs) -o g++ $(pkg-config raspicam --cflags --libs) -o g++ $(pkg-config wiringpi --cflags --libs) -o %e %f
