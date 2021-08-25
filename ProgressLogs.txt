@@ -24,3 +24,4 @@
 > Showing the car turning movement's information on the front window
 > Configured the digital pins of RPi to connect with Aurdino 
 > Code added to Arduino for turning the car right/left by different angles
+> Trained model loaded
