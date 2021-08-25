@@ -9,6 +9,8 @@ using namespace std;
 using namespace cv;
 using namespace raspicam;
 
+//Image Processing variables
+
 Mat frame, Matrix, framePers, frameGray, frameThresh, frameEdge, frameFinal, frameFinalDuplicate;
 Mat ROILane;
 int LeftLanePos, RightLanePos, frameCenter, laneCenter, Result;
@@ -21,6 +23,11 @@ vector<int> histrogramLane;
 
 Point2f Source[] = {Point2f(50,135),Point2f(315,135),Point2f(15,185), Point2f(355,185)};
 Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(300,240)};
+
+//Machine Learning variables
+CascadeClassifier Stop_Cascade; 
+Mat frame_stop;
+vector<Rect> Stop;
 
 void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
 {
@@ -97,6 +104,14 @@ void LaneCenter()
 }
 
 
+void stop_detection()
+{
+   if(!Stop_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//Datasets//classifier//Stop_cascade.xml"));
+   {
+      printf("unable to ope model data"); 
+    }
+}
+
 void Capture()
 {
     Camera.grab();
@@ -131,6 +146,7 @@ int main(int argc, char **argv)
 	Histrogram();
 	LaneFinder();
 	LaneCenter();
+	stop_detection();
 	
 	if (Result ==0)
 	{
