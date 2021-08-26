@@ -26,7 +26,7 @@ Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(3
 
 //Machine Learning variables
 CascadeClassifier Stop_Cascade; 
-Mat frame_stop;
+Mat frame_Stop, RoI_Stop, gray_Stop;
 vector<Rect> Stop;
 
 void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
@@ -40,6 +40,16 @@ void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
     Camera.set ( CAP_PROP_FPS,  ( "-fps",argc,argv,0));
 
 }
+
+
+void Capture()
+{
+    Camera.grab();
+    Camera.retrieve(frame);
+    cvtColor(frame, frame, COLOR_BGR2RGB);
+    cvtColor(frame, frame_Stop, COLOR_BGR2RGB);
+}
+
 
 void Perspective()
 {
@@ -106,17 +116,22 @@ void LaneCenter()
 
 void stop_detection()
 {
-   if(!Stop_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//Datasets//classifier//Stop_cascade.xml"));
-   {
-      printf("unable to ope model data"); 
+   Stop_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//Datasets//classifier//Stop_cascade.xml");
+  
+    
+    RoI_Stop = frame_Stop(Rect(0,0,360,240));
+    cvtColor(RoI_Stop, gray_Stop, COLOR_RGB2GRAY);
+    equalizeHist(gray_Stop, gray_Stop);
+    Stop_Cascade.detectMultiScale(gray_Stop, Stop);
+    
+    for(int i=0; i<Stop.size(); i++)
+    {
+	Point P1(Stop[i].x, Stop[i].y);
+	Point P2(Stop[i].x + Stop[i].width, Stop[i].x + Stop[i].height);
+	
+	rectangle(RoI_Stop, P1, P2, Scalar(0, 0, 255), 2);
+	putText(RoI_Stop, "Stop Sign", P1, FONT_HERSHEY_PLAIN, 1,  Scalar(0, 0, 255, 255), 2);
     }
-}
-
-void Capture()
-{
-    Camera.grab();
-    Camera.retrieve(frame);
-    cvtColor(frame, frame, COLOR_BGR2RGB);
 }
 
 
@@ -230,6 +245,11 @@ int main(int argc, char **argv)
 	moveWindow("Final", 720, 100);
 	resizeWindow("Final", 360, 240);
 	imshow("Final" ,frameFinal);
+	
+	namedWindow("StopSign", WINDOW_KEEPRATIO);
+	moveWindow("StopSign", 720, 340);
+	resizeWindow("StopSign", 360, 240);
+	imshow("StopSign" ,RoI_Stop);
 	
 	waitKey(1);
 	auto end = std::chrono::system_clock::now();
