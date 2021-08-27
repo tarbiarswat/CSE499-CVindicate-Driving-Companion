@@ -169,6 +169,17 @@ int main(int argc, char **argv)
 	LaneCenter();
 	stop_detection();
 	
+	if (dist_Stop > 5 && dist_Stop < 20)
+	{
+	    digitalWrite(21, 0);
+	    digitalWrite(22, 0);
+	    digitalWrite(23, 0);	//decimal=8
+	    digitalWrite(24, 1);
+	    cout<<"Left3"<<endl;
+	    
+	    goto Stop_sign;
+	    }
+	
 	if (Result ==0)
 	{
 	    digitalWrite(21, 0);
@@ -231,6 +242,8 @@ int main(int argc, char **argv)
 	    digitalWrite(24, 0);
 	    cout<<"Left3"<<endl;
 	}
+	
+	Stop_sign:
 	
 	ss.str("");
 	ss.clear();

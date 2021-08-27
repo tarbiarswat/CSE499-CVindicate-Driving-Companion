@@ -28,3 +28,4 @@
 > 600 custom dataset annotation completed 
 > Completed training the model
 > Distance estimation calculated and real time distance visualized
+> Stop sign code passed to slave device
