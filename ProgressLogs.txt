@@ -27,4 +27,4 @@
 > Trained model loaded
 > 600 custom dataset annotation completed 
 > Completed training the model
-> Distance estimation and real time distance visualized
+> Distance estimation calculated and real time distance visualized
