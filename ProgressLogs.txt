@@ -26,3 +26,4 @@
 > Code added to Arduino for turning the car right/left by different angles
 > Trained model loaded
 > 600 custom dataset annotation completed 
+> Completed training the model
