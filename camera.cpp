@@ -28,10 +28,11 @@ Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(3
 CascadeClassifier Stop_Cascade; 
 Mat frame_Stop, RoI_Stop, gray_Stop;
 vector<Rect> Stop;
+int dist_Stop;
 
 void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
 {
-    Camera.set ( CAP_PROP_FRAME_WIDTH,  ( "-w",argc,argv,360 ) );
+    Camera.set ( CAP_PROP_FRAME_WIDTH,  ( "-w",argc,argv,400 ) );
     Camera.set ( CAP_PROP_FRAME_HEIGHT,  ( "-h",argc,argv,240 ) );
     Camera.set ( CAP_PROP_BRIGHTNESS, ( "-br",argc,argv,50 ) );
     Camera.set ( CAP_PROP_CONTRAST ,( "-co",argc,argv,50 ) );
@@ -116,10 +117,10 @@ void LaneCenter()
 
 void stop_detection()
 {
-   Stop_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//Datasets//classifier//Stop_cascade.xml");
+   Stop_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//DatasetsV2//classifier//Stop_cascade.xml");
   
     
-    RoI_Stop = frame_Stop(Rect(0,0,360,240));
+    RoI_Stop = frame_Stop(Rect(200,0,200,140));
     cvtColor(RoI_Stop, gray_Stop, COLOR_RGB2GRAY);
     equalizeHist(gray_Stop, gray_Stop);
     Stop_Cascade.detectMultiScale(gray_Stop, Stop);
@@ -131,6 +132,11 @@ void stop_detection()
 	
 	rectangle(RoI_Stop, P1, P2, Scalar(0, 0, 255), 2);
 	putText(RoI_Stop, "Stop Sign", P1, FONT_HERSHEY_PLAIN, 1,  Scalar(0, 0, 255, 255), 2);
+	dist_Stop = (-0.833)*(P2.x-P1.x)+ 89.7;
+	ss.str("");
+	ss.clear();
+	ss<<"D= "<<dist_Stop<<"(cm)";
+	putText(RoI_Stop, ss.str(), Point2f(1,130), 0, 1, Scalar(0,0,255), 2);
     }
 }
 
@@ -232,23 +238,23 @@ int main(int argc, char **argv)
 	putText(frame, ss.str(), Point2f(1,50), 0, 1, Scalar(0,0,255), 2);
 	
 	namedWindow("FrontView", WINDOW_KEEPRATIO);
-	moveWindow("FrontView", 0, 100);
-	resizeWindow("FrontView", 360, 240);
+	moveWindow("FrontView", 150, 100);
+	resizeWindow("FrontView", 480, 360);
 	imshow("FrontView", frame);
 	
 	namedWindow("Birds Eye View", WINDOW_KEEPRATIO);
-	moveWindow("Birds Eye View", 360, 100);
-	resizeWindow("Birds Eye View", 360, 240);
+	moveWindow("Birds Eye View", 630, 100);
+	resizeWindow("Birds Eye View", 480, 360);
 	imshow("Birds Eye View" ,framePers);
 	
 	namedWindow("Final", WINDOW_KEEPRATIO);
-	moveWindow("Final", 720, 100);
-	resizeWindow("Final", 360, 240);
+	moveWindow("Final", 1110, 100);
+	resizeWindow("Final", 480, 360);
 	imshow("Final" ,frameFinal);
 	
 	namedWindow("StopSign", WINDOW_KEEPRATIO);
-	moveWindow("StopSign", 720, 340);
-	resizeWindow("StopSign", 360, 240);
+	moveWindow("StopSign", 1110, 480);
+	resizeWindow("StopSign", 480, 360);
 	imshow("StopSign" ,RoI_Stop);
 	
 	waitKey(1);
