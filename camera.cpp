@@ -25,10 +25,10 @@ Point2f Source[] = {Point2f(50,135),Point2f(315,135),Point2f(15,185), Point2f(35
 Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(300,240)};
 
 //Machine Learning variables
-CascadeClassifier Stop_Cascade; 
-Mat frame_Stop, RoI_Stop, gray_Stop;
-vector<Rect> Stop;
-int dist_Stop;
+CascadeClassifier Stop_Cascade, Object_Cascade; 
+Mat frame_Stop, RoI_Stop, gray_Stop, frame_Object, RoI_Object, gray_Object;
+vector<Rect> Stop, Object;
+int dist_Stop, dist_Object;
 
 void Setup ( int argc,char **argv, RaspiCam_Cv &Camera )
 {
@@ -49,6 +49,7 @@ void Capture()
     Camera.retrieve(frame);
     cvtColor(frame, frame, COLOR_BGR2RGB);
     cvtColor(frame, frame_Stop, COLOR_BGR2RGB);
+    cvtColor(frame, frame_Object, COLOR_BGR2RGB);
 }
 
 
@@ -120,7 +121,7 @@ void stop_detection()
    Stop_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//DatasetsV2//classifier//Stop_cascade.xml");
   
     
-    RoI_Stop = frame_Stop(Rect(200,0,200,140));
+    RoI_Stop = frame_Stop(Rect(0,0,400,240));
     cvtColor(RoI_Stop, gray_Stop, COLOR_RGB2GRAY);
     equalizeHist(gray_Stop, gray_Stop);
     Stop_Cascade.detectMultiScale(gray_Stop, Stop);
@@ -139,6 +140,33 @@ void stop_detection()
 	putText(RoI_Stop, ss.str(), Point2f(1,130), FONT_HERSHEY_PLAIN, 1, Scalar(0,255,255), 1.5);
     }
 }
+
+
+void Object_detection()
+{
+   Object_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//ObjectDatasets//classifier//Object_cascade.xml");
+  
+    
+    RoI_Object = frame_Object(Rect(0,0,400,240));
+    cvtColor(RoI_Object, gray_Object, COLOR_RGB2GRAY);
+    equalizeHist(gray_Object, gray_Object);
+    Object_Cascade.detectMultiScale(gray_Object, Object);
+    
+    for(int i=0; i<Object.size(); i++)
+    {
+	Point P1(Object[i].x, Object[i].y);
+	Point P2(Object[i].x + Object[i].width, Object[i].x + Object[i].height);
+	
+	rectangle(RoI_Object, P1, P2, Scalar(0, 0, 255), 2);
+	putText(RoI_Object, "Object", P1, FONT_HERSHEY_PLAIN, 1,  Scalar(0, 0, 255, 255), 1.5);
+	dist_Object = (-0.833)*(P2.x-P1.x)+ 95.7;
+	ss.str("");
+	ss.clear();
+	ss<<"Distance= "<<dist_Object<<"(cm)";
+	putText(RoI_Object, ss.str(), Point2f(1,130), FONT_HERSHEY_PLAIN, 1, Scalar(0,255,255), 1.5);
+    }
+}
+
 
 
 int main(int argc, char **argv)
@@ -168,6 +196,7 @@ int main(int argc, char **argv)
 	LaneFinder();
 	LaneCenter();
 	stop_detection();
+	Object_detection();
 	
 	if (dist_Stop > 5 && dist_Stop < 20)
 	{
@@ -251,24 +280,29 @@ int main(int argc, char **argv)
 	putText(frame, ss.str(), Point2f(1,50), 0, 1, Scalar(0,0,255), 2);
 	
 	namedWindow("FrontView", WINDOW_KEEPRATIO);
-	moveWindow("FrontView", 150, 100);
-	resizeWindow("FrontView", 480, 360);
+	moveWindow("FrontView", 0, 100);
+	resizeWindow("FrontView", 640, 480);
 	imshow("FrontView", frame);
 	
 	namedWindow("Birds Eye View", WINDOW_KEEPRATIO);
-	moveWindow("Birds Eye View", 630, 100);
-	resizeWindow("Birds Eye View", 480, 360);
+	moveWindow("Birds Eye View", 640, 100);
+	resizeWindow("Birds Eye View", 640, 480);
 	imshow("Birds Eye View" ,framePers);
 	
 	namedWindow("Final", WINDOW_KEEPRATIO);
-	moveWindow("Final", 1110, 100);
-	resizeWindow("Final", 480, 360);
+	moveWindow("Final", 1280, 100);
+	resizeWindow("Final", 640, 480);
 	imshow("Final" ,frameFinal);
 	
 	namedWindow("StopSign", WINDOW_KEEPRATIO);
-	moveWindow("StopSign", 1110, 480);
-	resizeWindow("StopSign", 480, 360);
+	moveWindow("StopSign", 1280, 580);
+	resizeWindow("StopSign", 640, 480);
 	imshow("StopSign" ,RoI_Stop);
+	
+	namedWindow("ObjectDetection", WINDOW_KEEPRATIO);
+	moveWindow("ObjectDetection", 640, 480);
+	resizeWindow("ObjectDetection", 640, 480);
+	imshow("ObjectDetection" ,RoI_Object);
 	
 	waitKey(1);
 	auto end = std::chrono::system_clock::now();
