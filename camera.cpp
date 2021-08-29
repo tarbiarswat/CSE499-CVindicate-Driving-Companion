@@ -133,7 +133,7 @@ void stop_detection()
 	
 	rectangle(RoI_Stop, P1, P2, Scalar(0, 0, 255), 2);
 	putText(RoI_Stop, "Stop Sign", P1, FONT_HERSHEY_PLAIN, 1,  Scalar(0, 0, 255, 255), 1.5);
-	dist_Stop = (-0.833)*(P2.x-P1.x)+ 95.7;
+	dist_Stop = (-0.833)*(P2.x-P1.x)+ 89.7;
 	ss.str("");
 	ss.clear();
 	ss<<"Distance= "<<dist_Stop<<"(cm)";
