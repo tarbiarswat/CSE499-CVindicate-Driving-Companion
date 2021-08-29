@@ -31,3 +31,4 @@
 > Stop sign code passed to slave device
 > Test dataset added
 > Object detection with custom dataset training completed
+> 600 custom car dataset images captured
