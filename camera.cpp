@@ -144,7 +144,7 @@ void stop_detection()
 
 void Object_detection()
 {
-   Object_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//ObjectDatasets//classifier//Object_cascade.xml");
+   Object_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//ObjectDatasetsV2//classifier//Object_cascade.xml");
   
     
     RoI_Object = frame_Object(Rect(0,0,400,240));
