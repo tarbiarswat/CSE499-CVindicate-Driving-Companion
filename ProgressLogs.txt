@@ -33,3 +33,4 @@
 > Object detection with custom dataset training completed
 > 600 custom car dataset images captured
 > 600 car dataset annotation completed, training the model ongoing
+> 600 car dataset training completed 
