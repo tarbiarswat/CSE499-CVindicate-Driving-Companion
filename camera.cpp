@@ -121,7 +121,7 @@ void stop_detection()
    Stop_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//DatasetsV2//classifier//Stop_cascade.xml");
   
     
-    RoI_Stop = frame_Stop(Rect(0,0,400,240));
+    RoI_Stop = frame_Stop(Rect(200,0,200,140));
     cvtColor(RoI_Stop, gray_Stop, COLOR_RGB2GRAY);
     equalizeHist(gray_Stop, gray_Stop);
     Stop_Cascade.detectMultiScale(gray_Stop, Stop);
@@ -133,7 +133,7 @@ void stop_detection()
 	
 	rectangle(RoI_Stop, P1, P2, Scalar(0, 0, 255), 2);
 	putText(RoI_Stop, "Stop Sign", P1, FONT_HERSHEY_PLAIN, 1,  Scalar(0, 0, 255, 255), 1.5);
-	dist_Stop = (-0.833)*(P2.x-P1.x)+ 89.7;
+	dist_Stop = (-1.0)*(P2.x-P1.x)+ 105;
 	ss.str("");
 	ss.clear();
 	ss<<"Distance= "<<dist_Stop<<"(cm)";
@@ -144,10 +144,10 @@ void stop_detection()
 
 void Object_detection()
 {
-   Object_Cascade.load("//home//pi//CSE499-CVindicate-Driving-Companion//ObjectDatasetsV2//classifier//Object_cascade.xml");
+   Object_Cascade.load("//home/pi//CSE499-CVindicate-Driving-Companion//ObjectDatasetsV3//classifier//Object_cascade.xml");
   
     
-    RoI_Object = frame_Object(Rect(0,0,400,240));
+    RoI_Object = frame_Object(Rect(100,100,200,140));
     cvtColor(RoI_Object, gray_Object, COLOR_RGB2GRAY);
     equalizeHist(gray_Object, gray_Object);
     Object_Cascade.detectMultiScale(gray_Object, Object);
@@ -300,7 +300,7 @@ int main(int argc, char **argv)
 	imshow("StopSign" ,RoI_Stop);
 	
 	namedWindow("ObjectDetection", WINDOW_KEEPRATIO);
-	moveWindow("ObjectDetection", 640, 480);
+	moveWindow("ObjectDetection", 640, 580);
 	resizeWindow("ObjectDetection", 640, 480);
 	imshow("ObjectDetection" ,RoI_Object);
 	
