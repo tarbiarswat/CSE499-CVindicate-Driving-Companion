@@ -36,3 +36,4 @@
 > 600 car dataset training completed 
 > Custom dataset's test outputs added
 > Training completed of custom car dataset version 2.0
+> Test sample custom dataset v3 added
