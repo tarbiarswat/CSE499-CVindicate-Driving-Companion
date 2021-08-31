@@ -147,7 +147,7 @@ void Object_detection()
    Object_Cascade.load("//home/pi//CSE499-CVindicate-Driving-Companion//ObjectDatasetsV3//classifier//Object_cascade.xml");
   
     
-    RoI_Object = frame_Object(Rect(100,100,200,140));
+    RoI_Object = frame_Object(Rect(50,50,200,140));
     cvtColor(RoI_Object, gray_Object, COLOR_RGB2GRAY);
     equalizeHist(gray_Object, gray_Object);
     Object_Cascade.detectMultiScale(gray_Object, Object);
