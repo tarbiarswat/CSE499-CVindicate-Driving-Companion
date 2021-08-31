@@ -184,8 +184,18 @@ void loop()
   {
     Left3();
   }
+  else if(data==8)
+  {
+    analogWrite(EnableL, 0);
+    analogWrite(EnableR, 0);
+    delay(4000);
+
+    analogWrite(EnableL, 150);
+    analogWrite(EnableR, 150);
+    delay(1000);
+  }
   
- else if (data>6)
+ else if (data>8)
  {
   Stop();
  }
