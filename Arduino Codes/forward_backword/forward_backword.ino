@@ -84,7 +84,7 @@ void Left1()
 {
   digitalWrite(HighL, LOW);
   digitalWrite(LowL, HIGH);
-  analogWrite(EnableL,90);
+  analogWrite(EnableL,160);
 
   digitalWrite(HighR, LOW);
   digitalWrite(LowR, HIGH);
@@ -107,7 +107,7 @@ void Left3()
 {
   digitalWrite(HighL, LOW);
   digitalWrite(LowL, HIGH);
-  analogWrite(EnableL,50);
+  analogWrite(EnableL,20);
 
   digitalWrite(HighR, LOW);
   digitalWrite(LowR, HIGH);
@@ -124,7 +124,7 @@ void Right1()
 
   digitalWrite(HighR, LOW);
   digitalWrite(LowR, HIGH);
-  analogWrite(EnableR,90);  
+  analogWrite(EnableR,160);  
   
 }
 
@@ -148,7 +148,7 @@ void Right3()
 
   digitalWrite(HighR, LOW);
   digitalWrite(LowR, HIGH);
-  analogWrite(EnableR,50);   
+  analogWrite(EnableR,20);   
   
 }
 
