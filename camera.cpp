@@ -21,7 +21,7 @@ stringstream ss;
 
 vector<int> histrogramLane;
 
-Point2f Source[] = {Point2f(100,135),Point2f(355,135),Point2f(15,185), Point2f(355,185)};
+Point2f Source[] = {Point2f(100,135),Point2f(332,135),Point2f(57,185), Point2f(367,185)};
 Point2f Destination[] = {Point2f(60,0),Point2f(300,0),Point2f(60,240), Point2f(300,240)};
 
 //Machine Learning variables
@@ -159,7 +159,7 @@ void Object_detection()
 	
 	rectangle(RoI_Object, P1, P2, Scalar(0, 0, 255), 2);
 	putText(RoI_Object, "Object", P1, FONT_HERSHEY_PLAIN, 1,  Scalar(0, 0, 255, 255), 1.5);
-	dist_Object = (-1.4545)*(P2.x-P1.x)+ 177.8;
+	dist_Object = (-1.4545)*(P2.x-P1.x)+ 178.2685;
 	ss.str("");
 	ss.clear();
 	ss<<"Distance= "<<dist_Object<<"cm";
